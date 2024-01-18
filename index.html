@@ -5,34 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - iPhone 15 Pro</title>
+
+    <!-- CSS link -->
     <link rel="stylesheet" href="style.css">
-    <script defer src="index.js"></script>
-    <title>Weather App</title>
+
+    <!-- Font awesome link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous">
+
+    <!-- Google fonts link -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+
+    <!-- Link to Javascript -->
+    <script src="index.js" defer></script>
 </head>
 
 <body>
-    <div class="weather-container">
-        <div class="location">
-            <h1 class="city">City Name</h1>
-            <p class="date">Date</p>
-        </div>
 
-        <div class="weather">
-            <img src="" alt="Weather Icon" class="weather-icon">
-            <h2 class="temperature">22°C</h2>
-        </div>
-
-        <div class="details">
-            <p class="description">Clear sky</p>
-            <p class="humidity">Humidity: 65%</p>
-            <p class="wind-speed">Wind Speed: 10 km/h</p>
-        </div>
-
-        <div class="search">
+    <div class="container">
+        <div class="input">
             <input type="text" class="inputValue" placeholder="Enter Location">
-            <button class="searchBtn" onclick="searchWeather()"><i class="fas fa-search"></i></button>
+            <button class="button" id="searchBtn"><i class="fas fa-search"></i></button>
         </div>
+
+        <div class="displayWeather">
+            <div class="weather-info">
+                <h2 class="date"></h2>
+                <h1 class="temp">----°C</h1>
+                <img class="weather-icon" src="" alt="Weather Icon">
+                <p class="desc">---</p>
+                <p class="humidity"></p>
+                <p class="wind-speed"></p>
+            </div>
+            <p class="error-message"></p>
+        </div>
+
     </div>
+
 </body>
 
 </html>
