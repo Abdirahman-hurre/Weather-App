@@ -17,6 +17,8 @@ let weather = {
         alert(error.message);
       }
     },
+
+    // Function to display weather information on the webpage
     displayWeather: function (data) {
       const { name } = data;
       const { icon, description } = data.weather[0];
