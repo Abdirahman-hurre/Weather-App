@@ -1,3 +1,4 @@
+// Weather object to handle API calls and display weather information
 let weather = {
     apiKey: '933619b45620c611230cb4a21de7f4ee',
     fetchWeather: async function (city) {
@@ -22,7 +23,7 @@ let weather = {
       const currentDate = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
       const formattedDate = currentDate.toLocaleDateString('en-US', options);
-      
+
       document.querySelector(".time-date").innerText = formattedDate;
       document.querySelector(".city").innerText = `Weather in ${name}`;
       document.querySelector(".icon").src = `https://openweathermap.org/img/wn/${icon}.png`;
