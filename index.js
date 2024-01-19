@@ -28,6 +28,8 @@ let weather = {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
       const formattedDate = currentDate.toLocaleDateString('en-US', options);
 
+
+      // Update HTML elements with weather information
       document.querySelector(".time-date").innerText = formattedDate;
       document.querySelector(".city").innerText = `Weather in ${name}`;
       document.querySelector(".icon").src = `https://openweathermap.org/img/wn/${icon}.png`;
