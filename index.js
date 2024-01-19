@@ -85,6 +85,7 @@ let weather = {
     },
   };
   
+  // Event listeners for search functionality
   document.querySelector(".search button").addEventListener("click", function () {
     weather.search();
   });
