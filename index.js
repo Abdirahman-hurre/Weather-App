@@ -51,6 +51,8 @@ let weather = {
   let geocode = {
     reverseGeocode: async function (latitude, longitude) {
       try {
+
+        // Async function to perform reverse geocoding
         const apikey = "75fe9f6705434da2a1e67e3aa643474b";
         const api_url = "https://api.opencagedata.com/geocode/v1/json";
         const request_url =
