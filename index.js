@@ -80,7 +80,7 @@ let weather = {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, console.error);
       } else {
-        weather.fetchWeather("Denver");
+        weather.fetchWeather("nairobi");
       }
     },
   };
