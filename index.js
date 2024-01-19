@@ -1,56 +1,85 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const searchBtn = document.getElementById('searchBtn');
-    searchBtn.addEventListener('click', function () {
-        const inputValue = document.querySelector('.inputValue').value;
-        const temp = document.querySelector('.temp');
-        const desc = document.querySelector('.desc');
-        const humidity = document.querySelector('.humidity');
-        const windSpeed = document.querySelector('.wind-speed');
-        const errorMessage = document.querySelector('.error-message');
-        const weatherIcon = document.querySelector('.weather-icon');
-
-        // Fetch data from OpenWeatherMap API
-        const apiKey = '933619b45620c611230cb4a21de7f4ee';
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&units=metric&appid=${apiKey}`)
-            .then(response => response.json())
-            .then(weather => {
-                errorMessage.innerText = '';
-                temp.innerText = `${weather.main.temp}°C`;
-                desc.innerText = weather.weather[0].main;
-                humidity.innerText = `Humidity: ${weather.main.humidity}%`;
-                windSpeed.innerText = `Wind Speed: ${weather.wind.speed} m/s`;
-
-                // Set Weather Icon
-                weatherIcon.src = getWeatherIcon(weather.weather[0].id);
-            })
-            .catch(err => {
-                errorMessage.innerText = 'City not found';
-                temp.innerText = '----°C';
-                desc.innerText = '---';
-                humidity.innerText = '';
-                windSpeed.innerText = '';
-                weatherIcon.src = ''; // Clear weather icon in case of error
-            });
-    });
-
-    // Function to get Weather Icon based on Weather Condition Code
-    function getWeatherIcon(weatherId) {
-        
-        if (weatherId >= 200 && weatherId < 300) {
-            return 'http://openweathermap.org/img/wn/11d.png';
-        } else if (weatherId >= 300 && weatherId < 400) {
-            return 'http://openweathermap.org/img/wn/09d.png';
-        } else if (weatherId >= 500 && weatherId < 600) {
-            return 'http://openweathermap.org/img/wn/10d.png';
-        } else if (weatherId >= 600 && weatherId < 700) {
-            return 'http://openweathermap.org/img/wn/13d.png';
-        } else if (weatherId >= 700 && weatherId < 800) {
-            return 'http://openweathermap.org/img/wn/50d.png';
-        } else if (weatherId === 800) {
-            return 'http://openweathermap.org/img/wn/01d.png';
-        } else if (weatherId > 800) {
-            return 'http://openweathermap.org/img/wn/03d.png';
+let weather = {
+    apiKey: '933619b45620c611230cb4a21de7f4ee',
+    fetchWeather: async function (city) {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${this.apiKey}`
+        );
+        if (!response.ok) {
+          throw new Error("No weather found.");
         }
-        return 'http://openweathermap.org/img/wn/01d.png'; // Default to sunny
+        const data = await response.json();
+        this.displayWeather(data);
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+    displayWeather: function (data) {
+      const { name } = data;
+      const { icon, description } = data.weather[0];
+      const { temp, humidity } = data.main;
+      const { speed } = data.wind;
+      const currentDate = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+      const formattedDate = currentDate.toLocaleDateString('en-US', options);
+      
+      document.querySelector(".time-date").innerText = formattedDate;
+      document.querySelector(".city").innerText = `Weather in ${name}`;
+      document.querySelector(".icon").src = `https://openweathermap.org/img/wn/${icon}.png`;
+      document.querySelector(".description").innerText = description;
+      document.querySelector(".temp").innerText = `${temp}°C`;
+      document.querySelector(".humidity").innerText = `Humidity: ${humidity}%`;
+      document.querySelector(".wind").innerText = `Wind speed: ${speed} km/h`;
+      document.querySelector(".weather").classList.remove("loading");
+      document.body.style.backgroundImage = `url('https://source.unsplash.com/1600x900/?${name}')`;
+    },
+    search: function () {
+      this.fetchWeather(document.querySelector(".search-bar").value);
+    },
+  };
+  
+  let geocode = {
+    reverseGeocode: async function (latitude, longitude) {
+      try {
+        const apikey = "75fe9f6705434da2a1e67e3aa643474b";
+        const api_url = "https://api.opencagedata.com/geocode/v1/json";
+        const request_url =
+          `${api_url}?key=${apikey}&q=${encodeURIComponent(latitude + "," + longitude)}&pretty=1&no_annotations=1`;
+  
+        const response = await fetch(request_url);
+        if (!response.ok) {
+          throw new Error(`Unable to geocode! Response code: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        const city = data.results[0].components.city;
+        weather.fetchWeather(city);
+        console.log(city);
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+    getLocation: function () {
+      function success(data) {
+        geocode.reverseGeocode(data.coords.latitude, data.coords.longitude);
+      }
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, console.error);
+      } else {
+        weather.fetchWeather("Denver");
+      }
+    },
+  };
+  
+  document.querySelector(".search button").addEventListener("click", function () {
+    weather.search();
+  });
+  
+  document.querySelector(".search-bar").addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+      weather.search();
     }
-});
+  });
+  
+  geocode.getLocation();
+  
