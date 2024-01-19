@@ -28,7 +28,7 @@ Enter the desired location in the search bar.
 
 Click the search button or press Enter to fetch the weather information.
 
-The app will display the current weather details for the specified location.
+The app will display the current weather details for the specified location and the background will will display the location 
 
 # Dependencies
 Font Awesome - Used for icons.
