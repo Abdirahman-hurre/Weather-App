@@ -96,5 +96,6 @@ let weather = {
     }
   });
   
+  // Initial call to obtain user's location and fetch weather data
   geocode.getLocation();
   
