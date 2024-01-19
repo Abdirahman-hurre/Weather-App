@@ -47,6 +47,7 @@ let weather = {
     },
   };
   
+  // Geocode object to handle reverse geocoding for obtaining location information
   let geocode = {
     reverseGeocode: async function (latitude, longitude) {
       try {
