@@ -71,6 +71,8 @@ let weather = {
         console.error(error.message);
       }
     },
+
+    // Function to obtain user's location
     getLocation: function () {
       function success(data) {
         geocode.reverseGeocode(data.coords.latitude, data.coords.longitude);
