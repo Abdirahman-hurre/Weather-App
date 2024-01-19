@@ -1,6 +1,8 @@
 // Weather object to handle API calls and display weather information
 let weather = {
     apiKey: '933619b45620c611230cb4a21de7f4ee',
+
+      // Async function to fetch weather data from OpenWeather API
     fetchWeather: async function (city) {
       try {
         const response = await fetch(
